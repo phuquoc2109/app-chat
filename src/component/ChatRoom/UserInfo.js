@@ -1,9 +1,10 @@
 import { Button, Typography } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { auth, db } from '../../firebase/config'
+import { AppContext } from '../../Context/AppProvider'
 import { AuthContext } from '../../Context/AuthProvider'
+import { auth } from '../../firebase/config'
 
 const WrapperStyled = styled.div`
     display: flex;
@@ -19,15 +20,15 @@ const WrapperStyled = styled.div`
 export default function UserInfo() {
 
     const data = useContext(AuthContext);
-    console.log(data);
+    const { clearState } = React.useContext(AppContext);
 
     return (
         <WrapperStyled>
             <div>
-                <Avatar src={data.photoURL}>{data.photoURL ? '' : data.displayName && data.displayName.charAt(0).toUpperCase()}</Avatar>
+                <Avatar src={data.photoURL}>{data.photoURL ? '' : data.displayName && data.displayName.charAt(0)?.toUpperCase()}</Avatar>
                 <Typography.Text className="username">{data.displayName}</Typography.Text>
             </div>
-            <Button ghost onClick={() => auth.signOut()}>Đăng xuất</Button>
+            <Button ghost onClick={() => {clearState(); auth.signOut()}}>Đăng xuất</Button>
         </WrapperStyled>
     )
 }

@@ -1,23 +1,26 @@
 import React from 'react';
 import { Row, Col, Button, Typography} from 'antd';
-import firebase, { auth, db } from '../../firebase/config';
-import { addDocument } from '../../firebase/services';
+import firebase, { auth } from '../../firebase/config';
+import { addDocument, generateKeywords } from '../../firebase/services';
 
 
 const {Title} = Typography;
+
 const fbProvider = new firebase.auth.FacebookAuthProvider();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export default function Login() {
 
-    const handleFbLogin = async () => {
-        const { additionalUserInfo, user} = await auth.signInWithPopup(fbProvider);
+    const handleLogin = async (provider) => {
+        const { additionalUserInfo, user} = await auth.signInWithPopup(provider);
         if ( additionalUserInfo?.isNewUser){
             addDocument('users', {
                 displayName: user.displayName,
                 email: user.email,
                 photoURL: user.photoURL,
                 uid: user.uid,
-                provider: additionalUserInfo.providerId,
+                providerId: additionalUserInfo.providerId,
+                keywords: generateKeywords(user.displayName?.toLowerCase()),
             });
         }
     }
@@ -26,14 +29,16 @@ export default function Login() {
             <div>
                 <Row justify="center" style={{height: 800}}>
                     <Col span={8}>
-                        <Title style={{textAlign: 'center'}} >Fun Chat</Title>
-                        <Button style={{width: '100%', marginBottom: 5}}>
-                            Đăng nhập bằng Google
+                        <Title style={{textAlign: 'center' , padding: '10px', fontSize: '50px', fontFamily: 'serif'}} >Fun Chat<i style={{color:"#1E90FF" , marginLeft:"10px", fontSize:"40px" }} class="fab fa-facebook-messenger"></i></Title>
+                        <Button 
+                        onClick={() =>handleLogin(googleProvider)}
+                        style={{width: '100%', marginBottom: 5}}>
+                            <i style={{color:"red", fontWeight: 'bold' , marginRight:"10px", fontSize:"20px"}} class="fab fa-google-plus-g"></i>Đăng nhập bằng Google
                         </Button>
                         <Button
-                        onClick={handleFbLogin}
+                        onClick={() =>handleLogin(fbProvider)}
                         style={{width: '100%'}}>
-                            Đăng nhập bằng Facebook
+                            <i style={{color:"blue", fontWeight: 'bold' , marginRight:"10px", fontSize:"20px"}} class="fab fa-facebook-square"></i>Đăng nhập bằng Facebook
                         </Button>
                     </Col>
                 </Row>

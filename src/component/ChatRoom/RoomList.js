@@ -1,9 +1,7 @@
-import { Button, Collapse, Typography } from 'antd'
-import React, { useContext, useMemo } from 'react'
-import styled from 'styled-components';
 import { PlusSquareOutlined } from '@ant-design/icons';
-import useFirestore from '../../hooks/useFirestore';
-import { AuthContext } from '../../Context/AuthProvider';
+import { Button, Collapse, Typography } from 'antd';
+import React, { useContext } from 'react';
+import styled from 'styled-components';
 import { AppContext } from '../../Context/AppProvider';
 
 const {Panel} = Collapse;
@@ -49,7 +47,7 @@ export default function RoomList() {
     const handleAddRoom = () => {
         setIsAddRoomVisible(true);
     }
-    console.log(rooms);
+   
     return (
         <Collapse ghost defaultActiveKey={'1'}>
             <PanelStyled header="Danh sách các phòng " key='1'>

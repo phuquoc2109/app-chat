@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react'
-import { Modal, Form, Input } from 'antd';
-import { AppContext } from '../../Context/AppProvider';
+import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { addDocument } from '../../firebase/services';
+import React, { useContext } from 'react';
+import { AppContext } from '../../Context/AppProvider';
 import { AuthContext } from '../../Context/AuthProvider';
+import { addDocument } from '../../firebase/services';
 
 export default function AddRoomModals() {
     const {isAddRoomVisible} = useContext(AppContext);
     const {setIsAddRoomVisible} = useContext(AppContext);
-    const  uid  = useContext(AuthContext);
+    const  {uid}  = useContext(AuthContext);
     const [form] = useForm();
 
     const handleOk = () => {
-        console.log({ formData: form.getFieldsValue() })
+       
         addDocument('rooms', {...form.getFieldsValue(), members: [uid] })
         
         form.resetFields();
