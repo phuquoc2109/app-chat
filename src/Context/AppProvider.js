@@ -10,7 +10,7 @@ export default function AppProvider({ children }) {
   const [selectedRoomId, setSelectedRoomId] = useState('');
 
   const {
-     uid 
+     user : {uid} 
   } = React.useContext(AuthContext);
 
   const roomsCondition = React.useMemo(() => {

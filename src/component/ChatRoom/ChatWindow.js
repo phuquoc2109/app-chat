@@ -72,7 +72,9 @@ export default function ChatWindow() {
 
     const {selectedRoom, members, setIsInviteMemberVisible} = useContext(AppContext); 
     const [inputValue, setInputValue] = useState('');
-    const user = useContext(AuthContext);
+    const {
+      user: { uid, photoURL, displayName },
+    } = useContext(AuthContext);
     const [form] = useForm();
     const inputRef = useRef(null);
     const messageListRef = useRef(null);
@@ -84,11 +86,11 @@ export default function ChatWindow() {
     const handleOnSubmit = (e) => {
         if(inputValue !== ''){
             addDocument('messages', {
-                text: inputValue,
-                uid :user.uid,
-                photoURL: user.photoURL,
-                roomId: selectedRoom.id,
-                displayName:user.displayName
+              text: inputValue,
+              uid,
+              photoURL,
+              roomId: selectedRoom.id,
+              displayName,
             });
     
             form.resetFields(['message']);

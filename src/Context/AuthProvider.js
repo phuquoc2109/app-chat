@@ -12,23 +12,25 @@ export default function AuthProvider({ children }) {
 
     useEffect(() => {
          const unsubscibed = auth.onAuthStateChanged((user) => {
-            if (!user) {
-                setUser({});
+            if (user) {
+                const { displayName, email, uid, photoURL } = user;
+                setUser({
+                  displayName,
+                  email,
+                  uid,
+                  photoURL,
+                });
                 setIsLoading(false);
-                history.push('/login');
-            }          
-            const {displayName, email, uid, photoURL} = user;
-            setUser({
-                displayName, 
-                email, 
-                uid,
-                photoURL,
+                history.push('/');
+                return;
+              }
+        
+              // reset user info
+              setUser({});
+              setIsLoading(false);
+              history.push('/login');
             });
-            
-            setIsLoading(false);
-            history.push('/');
-            return;
-        });
+        
 
         return () => {
             unsubscibed();
@@ -37,7 +39,7 @@ export default function AuthProvider({ children }) {
     }, [history])
 
     return (
-        <AuthContext.Provider value={ user }>
+        <AuthContext.Provider value={ {user} }>
             { isLoading ? <Spin size="large" style={{ position: 'fixed', marginTop: '100px', inset: 0 }} /> : children }
         </AuthContext.Provider>
     )
