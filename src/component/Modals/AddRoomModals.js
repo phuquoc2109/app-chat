@@ -8,12 +8,12 @@ import { addDocument } from '../../firebase/services';
 export default function AddRoomModals() {
     const {isAddRoomVisible} = useContext(AppContext);
     const {setIsAddRoomVisible} = useContext(AppContext);
-    const  {user : {uid}}  = useContext(AuthContext);
+    const  {user}  = useContext(AuthContext);
     const [form] = useForm();
 
     const handleOk = () => {
        
-        addDocument('rooms', {...form.getFieldsValue(), members: [uid] })
+        addDocument('rooms', {...form.getFieldsValue(), members: [user.uid] })
         
         form.resetFields();
 

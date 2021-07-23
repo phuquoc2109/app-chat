@@ -10,7 +10,7 @@ export default function AppProvider({ children }) {
   const [selectedRoomId, setSelectedRoomId] = useState('');
 
   const {
-     user : {uid} 
+     user: {uid}
   } = React.useContext(AuthContext);
 
   const roomsCondition = React.useMemo(() => {
@@ -28,6 +28,9 @@ export default function AppProvider({ children }) {
     [rooms, selectedRoomId]
   );
 
+  console.log(rooms);
+
+  
   const usersCondition = React.useMemo(() => {
     return {
       fieldName: 'uid',

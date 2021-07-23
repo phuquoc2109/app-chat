@@ -4,26 +4,26 @@ import firebase, { auth } from '../../firebase/config';
 import { addDocument, generateKeywords } from '../../firebase/services';
 
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export default function Login() {
+  const handleLogin = async (provider) => {
+    const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
 
-    const handleLogin = async (provider) => {
-        const { additionalUserInfo, user} = await auth.signInWithPopup(provider);
-        if ( additionalUserInfo?.isNewUser){
-            addDocument('users', {
-                displayName: user.displayName,
-                email: user.email,
-                photoURL: user.photoURL,
-                uid: user.uid,
-                providerId: additionalUserInfo.providerId,
-                keywords: generateKeywords(user.displayName?.toLowerCase()),
-            });
-        }
+    if (additionalUserInfo?.isNewUser) {
+      addDocument('users', {
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        providerId: additionalUserInfo.providerId,
+        keywords: generateKeywords(user.displayName?.toLowerCase()),
+      });
     }
+  };
 
         return (
             <div>
