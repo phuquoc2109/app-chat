@@ -8,16 +8,17 @@ const useFirestore = (collection, condition) => {
         let collectionRef = db.collection(collection).orderBy('createdAt');
         if (condition) {
             if (!condition.compareValue || !condition.compareValue.length) {
-
+                // reset documents data
                 setDocuments([]);
                 return;
             } else {
-                collectionRef.where(
+                collectionRef = collectionRef.where(
                     condition.fieldName,
                     condition.operator,
                     condition.compareValue
                 );
             }
+
         }
 
         const unsubscribe = collectionRef.onSnapshot((snapshot) => {
@@ -28,6 +29,7 @@ const useFirestore = (collection, condition) => {
 
             setDocuments(documents);
         });
+
 
         return unsubscribe;
     }, [collection, condition]);
