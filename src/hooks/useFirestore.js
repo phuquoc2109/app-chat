@@ -12,7 +12,7 @@ const useFirestore = (collection, condition) => {
                 setDocuments([]);
                 return;
             } else {
-                collectionRef = collectionRef.where(
+                collectionRef.where(
                     condition.fieldName,
                     condition.operator,
                     condition.compareValue

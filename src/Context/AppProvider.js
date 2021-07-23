@@ -28,7 +28,6 @@ export default function AppProvider({ children }) {
     [rooms, selectedRoomId]
   );
 
-  console.log(rooms);
 
   
   const usersCondition = React.useMemo(() => {
