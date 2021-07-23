@@ -3,6 +3,8 @@ import { Button, Collapse, Typography } from 'antd';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../../Context/AppProvider';
+import './RommList.css';
+
 
 const {Panel} = Collapse;
 const PanelStyled = styled(Panel)`
@@ -10,9 +12,7 @@ const PanelStyled = styled(Panel)`
         .ant-collapse-header, p {
             color: white;
         }
-        .ant-collapse-content-box {
-            padding: 0 40px;
-        }
+        
         .add-room{
             color: white;
             padding: 0px;
@@ -49,10 +49,10 @@ export default function RoomList() {
     }
    
     return (
-        <Collapse ghost defaultActiveKey={'1'}>
-            <PanelStyled header="Danh sách các phòng " key='1'>
+        <Collapse className="room" ghost defaultActiveKey={'1'}>
+            <PanelStyled className="roomlist" header="Danh sách các phòng " key='1'>
                 {
-                    rooms.map(room => <LinkStyle key={room.id} onClick={() => setSelectedRoomId(room.id)}>{room.name}</LinkStyle>)
+                    rooms.map(room => <LinkStyle className="roomlist-name" key={room.id} onClick={() => setSelectedRoomId(room.id)}><i style={{color: '#F0F8FF', marginRight:'5px'}} class="fas fa-comments"></i>{room.name}</LinkStyle>)
                 }
                 <Button type="text" icon={<PlusSquareOutlined />} className="add-room" onClick={handleAddRoom}>Thêm phòng</Button>
             </PanelStyled>

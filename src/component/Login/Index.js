@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Button, Typography} from 'antd';
 import firebase, { auth } from '../../firebase/config';
 import { addDocument, generateKeywords } from '../../firebase/services';
-
+import './Login.css';
 
 const { Title } = Typography;
 
@@ -28,14 +28,16 @@ export default function Login() {
         return (
             <div>
                 <Row justify="center" style={{height: 800}}>
-                    <Col span={8}>
-                        <Title style={{textAlign: 'center' , padding: '10px', fontSize: '50px', fontFamily: 'serif'}} >Fun Chat<i style={{color:"#1E90FF" , marginLeft:"10px", fontSize:"40px" }} class="fab fa-facebook-messenger"></i></Title>
-                        <Button 
+                    <Col className="login" span={8}>
+                        <Title className="login-title" style={{textAlign: 'center' , padding: '10px', fontSize: '50px', fontFamily: 'serif'}} >Fun Chat<i style={{color:"#1E90FF" , marginLeft:"10px", fontSize:"40px" }} class="fab fa-facebook-messenger"></i></Title>
+                        <Button
+                        className="login-gg" 
                         onClick={() =>handleLogin(googleProvider)}
                         style={{width: '100%', marginBottom: 5}}>
                             <i style={{color:"red", fontWeight: 'bold' , marginRight:"10px", fontSize:"20px"}} class="fab fa-google-plus-g"></i>Đăng nhập bằng Google
                         </Button>
                         <Button
+                        className="login-fb"
                         onClick={() =>handleLogin(fbProvider)}
                         style={{width: '100%'}}>
                             <i style={{color:"blue", fontWeight: 'bold' , marginRight:"10px", fontSize:"20px"}} class="fab fa-facebook-square"></i>Đăng nhập bằng Facebook
